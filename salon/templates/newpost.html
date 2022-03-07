@@ -1,0 +1,45 @@
+{%extends "base.html"%}
+{%block title%} newpost {%endblock%}
+{%block content%}
+
+<h1 class="title">{{title}}</h1>
+<h1 class="title">Leave a Post</h1>
+
+<form action="" method="post" name="blog_edit">
+
+    <div class="field">
+        <label for="title" class="label">Subject</label>
+        <div class="control">
+            <input type="radio" name="category" value="hair" checked> Hair<br>
+            <input type="radio" name="category" value="manicure">Manicure<br>
+            <input type="radio" name="category" value="cleaning"> Cleaning<br>
+            <input type="radio" name="category" value="prices"> Prices<br>
+            <input type="radio" name="category" value="other"> Other
+        </div>
+    </div>
+
+
+    <div class="field">
+        <label for="title" class="label">Title</label>
+        <div class="control">
+            <input style="width:60%" type="text" name="title" class="input" required="required"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="title" class="label">Entry</label>
+        <div class="control">
+            <textarea style="height:250px; width:60%" type="text" name="content" class="input"
+                      required="required"></textarea>
+        </div>
+    </div>
+
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+</form>
+
+{%endblock%}

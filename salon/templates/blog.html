@@ -1,0 +1,117 @@
+{%extends "base.html"%}
+{%block title%} Blog {%endblock%}
+{%block content%}
+
+
+<div class="columns">
+    {% if current_user.is_authenticated == False %}
+    <div class="column is-3">
+        <a class="button is-primary is-block is-alt is-large"
+           href="{{ url_for('signin') }}">New Post</a>
+    </div>
+    {%else%}
+    <div class="column is-3">
+        <a class="button is-primary is-block is-alt is-large"
+           href="{{ url_for('newpost_page', people_id=current_user.id) }}">New Post</a>
+    </div>
+    {%endif%}
+
+    <div class="column is-9">
+
+        <div class="box content">
+            {% for post in posts %}
+            <article class="post">
+                <strong>{{ post.subject }}</strong>
+                <p>{{ post.post_title }}</p>
+                <div class="media">
+                    <div class="media-left">
+                        <p class="image is-32x32">
+                            <img src="http://bulma.io/images/placeholders/128x128.png">
+                        </p>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                {{ post.post_content}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="media-right">
+
+                        <span> posted on {{post.date_time}}</span>
+
+
+                    </div>
+                    <div>
+                        <a href="{{ url_for('like_post', post_id=post.id) }}" type="submit" class="liked">
+                            <img src="{{ url_for('static', filename='images/iconfinder_thumbs-o-up_1608724.png')}}"/>
+                            <span>{{post.like}}</span>
+                        </a>
+
+                        <a href="{{ url_for('dislike_post', post_id=post.id) }}" type="submit" class="disliked">
+                            <img src="{{ url_for('static', filename='images/dislike1.png')}}"/>
+                            <span>{{post.dislike}}</span>
+                        </a>
+                        {% if current_user.id==post.people_id %}
+                        <a href="{{ url_for('post_delete', post_id=post.id) }}" type="submit">
+                            <img style="width : 30px" src="{{ url_for('static', filename='images/trash_images2.png')}}"/>
+                        </a>
+                        {%endif%}
+                    </div>
+                    {% if current_user.is_authenticated == False %}
+                    <div class="media-right">
+                        <a href="{{ url_for('signin') }}">New Comment</a>
+                    </div>
+                    {%else%}
+                    <div class="media-right">
+                        <a href="{{ url_for('comment_page', people_id=current_user.id, post_id=post.id) }}">New
+                            Comment</a>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                {% for comment in post.comments %}
+                <div style="margin-right:100px;">
+                    <hr style="border-color: blue">
+                    <p align="center"><strong>{{comment.title}}</strong></p>
+                    <p align="center">{{comment.content}}</p>
+
+                    <div class="media-right">
+                        <p align="right">commented on {{comment.date_time}}</p>
+                    </div>
+                    <div align="right">
+                        <a href="{{ url_for('like_comment', comment_id=comment.id) }}" type="submit" class="liked">
+                            <img src="{{ url_for('static', filename='images/iconfinder_thumbs-o-up_1608724.png')}}"/>
+                            <span>{{comment.like_number}}</span>
+                        </a>
+
+                        <a href="{{ url_for('dislike_comment', comment_id=comment.id) }}" type="submit"
+                           class="disliked">
+                            <img src="{{ url_for('static', filename='images/dislike1.png')}}"/>
+                            <span>{{comment.dislike_number}}</span>
+                        </a>
+                        <div>
+                            {% if current_user.id==comment.people_id  %}
+                            <a href="{{ url_for('comment_delete', id=comment.id) }}" type="submit">
+                            <img style="width : 30px" src="{{ url_for('static', filename='images/trash_images2.png')}}"/>
+                        </a>
+                            {% endif %}
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                {% endfor %}
+
+            </article>
+            <hr style="border-color: black">
+
+            {% endfor %}
+        </div>
+        {%endblock%}
+    </div>
+</div>

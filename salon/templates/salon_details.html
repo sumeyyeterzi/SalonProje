@@ -1,0 +1,168 @@
+{%extends "base.html"%}
+{%block title%}{{title}}{%endblock%}
+{%block content%}
+
+<script>
+
+    function updateCreditCard () {
+
+        var deleteds = []
+        var checks = document.getElementsByClassName("delete_check");
+
+        for (var i = 0; i < checks.length; i++) {
+            if (checks[i].checked){
+                deleteds.push(checks[i].value - 0)
+            }
+        }
+
+        var myForm, nameInput;
+
+        myForm = document.createElement('form');
+        myForm.action = '{{ url_for('delete_service_prices', salon_id=shop.id) }}';
+        myForm.method = 'post';
+
+        nameInput = document.createElement('input');
+        nameInput.type = 'hidden';
+        nameInput.name = 'deleteds_list';
+        nameInput.value = deleteds;
+        myForm.appendChild(nameInput);
+
+
+
+        document.getElementById('shop_main_div').appendChild(myForm);
+        myForm.submit();
+    }
+
+</script>
+
+<div id="shop_main_div" style="text-align: center; margin-bottom: 1rem;">
+
+    {%if shop.shop_logo == None%}
+    <img style="width : 20%;" src="{{ url_for('static', filename='images/shopicon.jpg') }}" alt="Salon">
+    {%else%}
+    <img style="width : 20%;" alt="Salon" src="data:image/png;base64,{{ image }}" id="logo" >
+
+    {%endif%}
+
+    <h1>{{shop.shopname}}</h1>
+    <div class="columns">
+        <div class="column">
+            <img src="{{ url_for('static', filename='images/loclogo.png') }}" alt="Location">
+            <p>{{shop.location}} <br> <span style="font-weight:bold">{{shop.city}}</span></p>
+        </div>
+        <div class="column">
+            <img src="{{ url_for('static', filename='images/timelogo.png') }}" alt="Location">
+            <p>{{shop.openingtime}} - {{shop.closingtime}} </p>
+        </div>
+        <div class="column">
+            <img src="{{ url_for('static', filename='images/employee.png') }}" alt="Location">
+            <p>Number of employees: {{shop.numberofemployee}} </p>
+        </div>
+    </div>
+
+    {%if shop.ownerpeople_id == current_user.id%}
+    <div class="columns">
+        <div class="column is-10">
+{#            <a href="{{ url_for('add_salon_page', id=shop.id) }}"#}
+            <a href="{{ url_for('add_salon_page') }}"
+               class="button is-primary is-block is-alt is-large">Edit Salons</a>
+        </div>
+        <div class="column is-2">
+            <a href="{{ url_for('salon_delete', id=shop.id) }}" class="button is-danger is-block is-alt is-large">Delete</a>
+        </div>
+    </div>
+    {%endif%}
+
+    {% if manicurists | length != 0 %}
+    <h1>Hairdressers</h1>
+
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Experience Year</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for manicurist in manicurists %}
+
+        <tr>
+            <th>{{ manicurist.people.name_surname}}</th>
+            <td>{{ manicurist.people.age}}</td>
+            <td>{{ manicurist.experience_year}}</td>
+            {%if manicurist.salon_id == None%}
+            <td>Unmployed</td>
+            <td>
+                <a href="{{ url_for('manicurist_employ', manicurist_id=manicurist.id, status=1, salon_id=shop.id) }}"
+                   class="button is-primary is-small">Employ</a>
+            </td>
+            {%else%}
+            <td>Employee</td>
+            <td>
+                <a href="{{ url_for('manicurist_employ', manicurist_id=manicurist.id, status=0, salon_id=shop.id) }}"
+                   class="button is-danger is-small">Dismiss</a>
+            </td>
+            {%endif%}
+
+
+        </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+    <h1>Services</h1>
+    <a href="{{ url_for('add_service_price_page', salon_id=shop.id) }}" class="button is-primary is-large">Add New Service</a>
+    <p></p>
+
+    {% if prices | length != 0 %}
+
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Definition</th>
+            <th>Gender</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Action</th>
+            <th><button onclick="updateCreditCard()"
+                   class="button is-danger is-small">Delete selecteds</button></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for price in prices %}
+
+        <tr>
+            <td>{{price.service_name}}</td>
+            <td>{{price.definition}}</td>
+            <td>{{price.gender}}</td>
+            <td>{{price.price}}</td>
+            <td>{{price.duration}} minutes</td>
+            <td>
+                <a href="{{ url_for('add_service_price_page', salon_id=shop.id, price_id=price.id) }}"
+                   class="button is-primary is-small">Update</a>
+            </td>
+            <td>
+                <input class="delete_check" name="{{price.id}}" value="{{price.id}}" type="checkbox">
+            </td>
+
+
+        </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+
+</div>
+
+
+{%endblock%}

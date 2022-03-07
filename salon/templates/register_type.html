@@ -1,0 +1,76 @@
+{%extends "base.html"%}
+{%block title%} Registeration Types {%endblock%}
+{%block content%}
+<center>
+    <h1 class="title">Registeration Types</h1>
+    <h4 class="title">Click continue button to select your registration type</h4>
+</center>
+<div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <form action="" method="post" name="register_type">
+            <div id="flex-container">
+
+                <div class="flip-card" style="margin:1%;">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <img src="https://cdn1.iconfinder.com/data/icons/materia-human/24/013_006_people_person_avatar_profile-256.png" alt="Avatar" style="width:300px;height:300px;background-color:#b2babb;">
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="box">
+                          <h1>User</h1>
+                            <ul>
+                                <li>can create posts on blog page.</li>
+                                <li>can get a reservation from manicurists.</li>
+                            </ul>
+                        </div>
+                         <button class="button is-success" name="submit_button" value="user">Continue</button>
+                    </div>
+                  </div>
+                </div>
+
+                 <div class="flip-card" style="margin:1%;">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <img src="https://cdn3.iconfinder.com/data/icons/beauty-salon/270/beauty-services-005-512.png" alt="Avatar" style="width:300px;height:300px; background-color:#808b96;">
+                    </div>
+                    <div class="flip-card-back">
+                      <div class="box">
+                          <h1>Manicurist</h1>
+                        <ul>
+                            <li>can create posts on blog page.</li>
+                            <li>can get a reservation from manicurists.</li>
+                        </ul>
+                         <button class="button is-success" name="submit_button" value="manicurist">Continue</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flip-card" style="margin:1%;">
+                  <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                      <img src="https://cdn4.iconfinder.com/data/icons/shopping-set-1/512/13-256.png" alt="Avatar" style="width:300px;height:300px; background-color:#b2babb;">
+                    </div>
+                    <div class="flip-card-back">
+                        <div class="box">
+                          <h1>Owner</h1>
+                            <ul>
+                                <li>can create salons.</li>
+                                <li>can add manicurists to their shops.</li>
+                            </ul>
+                         </div>
+                         <button class="button is-success" name="submit_button" value="owner">Continue</button>
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+        </form>
+
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+{%block type%}
+{%endblock%}

@@ -1,0 +1,61 @@
+{%extends "base.html"%}
+{%block title%} salonview {%endblock%}
+{%block content%}
+<div class="contactform" >
+    {% if message != None %}
+        <h5>{{message}}</h5>
+    {% endif %}
+    <form class="contactformi" style="display:inline;" action="/contact/{{id}}" method="post" id="contactshop">
+
+        <input type="hidden" name="contactid" value="{{contact.id}}">
+        <div class="form-group">
+        <label for="phonenumberid">Phone Number</label>
+        <input  pattern=".{10,10}"   required title="10 characters remove 0 if you use at the beginning" class="form-control" id="phonenumberid" name="phonenumber" value="{{contact.telephoneNumber}}" rows="3"></input>
+      </div>
+
+        <div class="form-group">
+        <label for="phonenumberid">Facebook Username</label>
+        <input  class="form-control" id="facebookcid" name="facebookc" value="{{contact.facebook}}" rows="3"></input>
+      </div>
+
+        <div class="form-group">
+        <label for="phonenumberid">Twitter Username</label>
+        <input  class="form-control" id="twittercid" name="twitterc" value="{{contact.twitter}}" rows="3"></input>
+        </div>
+
+        <div class="form-group">
+        <label for="phonenumberid">Instagram Username</label>
+        <input  class="form-control" id="instagramid" name="instagramc" value="{{contact.instagram}}" rows="3"></input>
+        </div>
+
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Type</label>
+        <select class="form-control" name="typec" id="exampleFormControlSelect1">
+          <option value="company">company</option>
+          <option value="personal">personal</option>
+
+        </select>
+      </div>
+
+        {% if contact == None %}
+        <button  style="width:80px;height:40px;margin-left : 180px; margin-top : 50px;"  type="submit" class="btn btn-primary">Add</button>
+
+        {% else %}
+         <button style="width:80px;height:60px;margin-left : 150px;" type="submit" class="btn btn-primary">Update</button>
+
+        </form>
+        <form  style="display:inline;" action="/contact/delete/{{id}}" method="post">
+              <input type="hidden" name="contactid" value="{{contact.id}}">
+              <button style="width:80px;height:60px;" type="submit" class="btn btn-primary">Delete</button>
+
+         </form>
+
+        {% endif %}
+
+
+
+
+</div>
+
+{%endblock%}

@@ -1,0 +1,201 @@
+{%extends "base.html"%}
+{%block title%} Statistics {%endblock%}
+{%block content%}
+
+<div align="center">
+
+    <button style="width : 180px;height:60px;" type="button" id="statisticbutton1" class="btn btn-primary ">Best Barbershops</button>
+    <button style="width : 180px;height:60px;" type="button" id="statisticbutton5" class="btn btn-primary ">Popular Barbershops</button>
+    <button style="width : 180px;height:60px;" type="button" id="statisticbutton2" class="btn btn-primary ">Latest Barbershops</button>
+    <button style="width : 180px;height:60px;" type="button" id="statisticbutton3" class="btn btn-primary ">Best Barbers</button>
+    <button style="width : 180px;height:60px;" type="button" id="statisticbutton4" class="btn btn-primary ">Popular Barbers</button>
+
+
+
+</div>
+
+
+<hr>
+
+
+
+
+<div class="bestbershopstable" >
+  <h3>Best Salons Table</h3>
+
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td >Larry the Bird</td>
+      <td>@twitter</td>
+      <td>@ttt</td>
+    </tr>
+  </tbody>
+</table>
+
+
+</div>
+
+
+<div class="lastaddedsalons" style="display:none;">
+
+    <h3>Last Added Salons</h3>
+    <table class="table">
+      <thead>
+        <tr>
+           <th scope="col">#</th>
+          <th scope="col">Shopname</th>
+          <th scope="col">City</th>
+          <th scope="col">Location</th>
+        </tr>
+      </thead>
+      <tbody>
+         {% for m in lastAddedSalons %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{m.shopname}}</td>
+          <td>{{m.city}}</td>
+          <td>{{m.location}}</td>
+        </tr>
+       {% endfor %}
+      </tbody>
+    </table>
+
+
+</div>
+
+<div class="bestmanicuristslist" style="display:none">
+
+    <h3>Best Manicurists</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+</div>
+
+<div class="mostpopularmanicurists" style="display:none">
+
+    <h3>Most Popular Manicurists</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+</div>
+
+
+<div class="popularsalons" style="display:none">
+
+    <h3>Most Popular Salons</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Shopname</th>
+          <th scope="col">City</th>
+          <th scope="col">Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in mostPopularManicurists %}
+        <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{m.shopname}}</td>
+          <td>{{m.city}}</td>
+          <td>{{m.location}}</td>
+        </tr>
+       {% endfor %}
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+{%endblock%}

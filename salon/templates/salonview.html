@@ -1,0 +1,337 @@
+{%extends "base.html"%}
+{%block title%} salonview {%endblock%}
+{%block content%}
+
+
+<!-- salon Info -->
+<div id="salonview_wrapper">
+    <div id="salon_card" align="left">
+      {% if salon.shop_logo == None %}
+        <img src="{{ url_for('static', filename='images/saloncard.jpg') }}" style="height:80px;" alt="John" >
+      {% else %}
+         <img style="width : 20%;" alt="Salon" src="data:image/png;base64,{{ salon.shop_logo }}" id="logo" >
+      {% endif %}
+      <h3>{{ salon.shopname}}</h3>
+      <p class="saloncard_title">{{ salon.city}}</p>
+      <p>{{ salon.location }}</p>
+      <p>Opening-Closing Time :  {{ salon.openingtime}} - {{ salon.closingtime}}</p>
+        {% if salon.contactInfo != None%}
+      <p>Phone : {{ salon.contactInfo.telephoneNumber }} </p>
+
+             {% if salon.contactInfo.instagram != None and salon.contactInfo.instagram != "" %}
+            <a class="salon_tag" target="_blank" href="https://www.instagram.com/{{ salon.contactInfo.instagram}}"><i class="fa fa-instagram fa-2x"></i></a>
+            {% endif %}
+
+            {% if salon.contactInfo.twitter != None and salon.contactInfo.twitter != ""  %}
+            <a class="salon_tag" target="_blank" href="https://www.twitter.com/{{ salon.contactInfo.twitter}}"><i class="fa fa-twitter fa-2x"></i></a>
+            {% endif %}
+            {% if salon.contactInfo.facebook != None and salon.contactInfo.facebook != "" %}
+            <a class="salon_tag" target="_blank" href="https://www.facebook.com/{{ salon.contactInfo.facebook}}"><i class="fa fa-facebook fa-2x"></i></a>
+            {% endif %}
+        {% endif %}
+        <hr>
+        {% if current_user.id == salon.ownerpeople_id %}
+        <a href="/contact/{{ salon.id}}">Contact Settings</a> <br>
+        {% endif %}
+
+         <a href="/rezervation/{{ salon.id}}">Get Rezervation</a>
+
+       </div>
+
+
+
+
+    <div class="salon_comment" style="width : 60%;">
+
+
+        <form id="commentmanicurist" method="post" action="" enctype="multipart/form-data">
+
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Select Manicurist</label>
+            <select class="form-control" name="manicurist" id="exampleFormControlSelect1">
+                    <option value="-1">Salon Itself</option>
+                 {% if manicurist != None  %}
+                    {% for b in manicurist %}
+                    <option value="{{b.id}}">{{b.people.name_surname}}</option>
+                    {% endfor %}
+                {% endif %}
+
+            </select>
+      </div>
+
+        <div class="form-group">
+        <label for="exampleFormControlSelect2">Rate</label>
+        <select class="form-control" name="bcommentrate" id="exampleFormControlSelect2">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+
+
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Title</label>
+            <input type="text"  name="bcommenttitle" class="form-control" id="bcommenttitle" placeholder="my title">
+        </div>
+
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Comment Text</label>
+        <textarea name="bcommenttext" class="form-control" id="bcommenttext" rows="3"></textarea>
+      </div>
+
+       <div>
+           <h6>Keywords</h6>
+           <strong>Price:</strong>
+           Cheap
+           <input type="checkbox" class="group1" value="0" name="key" checked />
+           Normal
+           <input type="checkbox" class="group1" value="1" name="key" />
+           Expensive
+            <input type="checkbox" class="group1" value="2" name="key" />
+       </div>
+
+    <div>
+        <strong>Skill:</strong>
+        Bad
+        <input type="checkbox" class="group2" value="3" name="key"/>
+        Normal
+        <input type="checkbox" class="group2" value="4" name="key" checked />
+        Good
+        <input type="checkbox" class="group2" value="5" name="key" />
+    </div>
+
+    <div>
+        <strong>Hygiene:</strong>
+        Dirty
+        <input type="checkbox" class="group3" value="6" name="key"/>
+        Normal
+        <input type="checkbox" class="group3" value="7" name="key" />
+        Clean
+        <input type="checkbox" class="group3" value="8" name="key" checked />
+    </div>
+     <div class="field">
+        <label class="label">Upload Image</label>
+        <div class="control">
+            <input type="file" name="commentfile" class="input" accept="image/*"/>
+        </div>
+    </div>
+
+        <br>
+        {% if current_user.is_active %}
+
+        <button type="submit" class="btn btn-success">Submit</button>
+
+        </form>
+        {% else %}
+        <a href="/signin" style="height:40px;" type="submit" class="btn btn-primary">Submit</a>
+
+        {% endif %}
+
+    </div>
+</div>
+
+    <div style="clear:both;">
+  <hr>
+  <h4>Comments</h4>
+  <br>
+  {% for comment in commentlist %}
+    <div>
+      <div class="container" style="margin-top:20px;">
+        <div class="row">
+        <div class="col-sm-12">
+        <h5>
+          {% if comment.peopleobj.id == current_user.id  %}
+             <div  style="display : inline , width : 150px; max-width:200px; margin-bottom : 20px;" class="form-group">
+
+                 <select class="form-control" name="bcommentrate" id="editrating">
+               <option value="{{comment.rate}}" selected disabled hidden>Rate : {{comment.rate}} /5</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            </div>
+            <p style="margin-bottom : 5px;" class="commenttexttitle" id="commentedittitle" contenteditable="true">{{comment.title}}</p>
+
+
+          {% else %}
+            {% for n in range (comment.rate) %}
+                <img src="{{ url_for('static', filename='images/star.png') }}">
+
+            {% endfor %}
+
+            <p style="margin-top : 20px;">{{comment.title}}</p>
+          {% endif %}
+        </h5>
+        </div><!-- /col-sm-12 -->
+        </div><!-- /row -->
+        <div class="row">
+        <div class="col-sm-1">
+        <div class="thumbnail">
+        <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        </div><!-- /thumbnail -->
+        </div><!-- /col-sm-1 -->
+
+        <div class="col-sm-5">
+        <div class="panel panel-default">
+        <div class="panel-heading">
+
+          {% if comment.peopleobj.id == current_user.id %}
+            <strong style="background-color : yellow;">{{comment.peopleobj.username}}</strong>
+          {% else %}
+             <strong>{{comment.peopleobj.username}}</strong>
+          {% endif %}
+
+           {% if comment.keywords != None and comment.keywords != "" %}
+             <span class="commentdatespan">commented on {{comment.dateTime}}, summary : {{comment.keywords}}</span>
+            {% else %}
+             <span class="commentdatespan">commented on {{comment.dateTime}}, summary :  Not Specified</span>
+            {% endif %}
+
+        </div>
+        <div class="panel-body">
+          {% if comment.peopleobj.id == current_user.id  %}
+            <p id="commentedittext" class="commenttextcontent" contenteditable="true">{{comment.content}}</p>
+          {% else %}
+            <p>{{comment.content}}</p>
+          {% endif %}
+
+          {% if comment.image != None%}
+             <img style="width : 20%;" alt="comment" src="data:image/png;base64,{{ comment.image }}" id="cimage" >
+          {% endif %}
+        </div><!-- /panel-body -->
+        </div><!-- /panel panel-default -->
+        </div><!-- /col-sm-5 -->
+        </div>
+        </div>
+        {% if comment.peopleobj.id == current_user.id  %}
+         <form style="display:inline;margin-left : 180px;" action="/salon/edit/{{ salon.id}}" id="editcommentform" method="POST">
+            <input  type="hidden" name="commentid" value="{{comment.id}}">
+             <input type="hidden" id="editrateresult" name="bcommentrate" value="">
+
+            <input id="commenttitleinput" type="hidden" name="commenttitle" value="">
+           <input  id="commenttextinput" type="hidden" name="commenttext" value="">
+
+            <button type="submit"  id="editpost1"  class="btn btn-primary btn-sm">Edit</button>
+        </form>
+        {% endif %}
+
+
+
+        {% if comment.peopleobj.id == current_user.id  %}
+        <form style="display : inline;margin-left : 20px;" action="/salon/delete/{{ salon.id}}" method="POST">
+            <input type="hidden" name="commentid" value="{{comment.id}}">
+            <button  type="submit"  class="btn btn-danger btn-sm">Delete</button>
+        </form>
+        <br>
+        {% endif %}
+
+
+        <!-- LİKED - DİSLİKED PART -->
+
+        <div style="margin-left : 185px;" id="demoforms">
+          {% if comment.likedDislikedobj == None  %}
+          <form class="likedislikeform" action="/salon/likedislike/{{ salon.id}}" method="post">
+              <input type="hidden" name="likedislikeid" value="{{comment.likedDislikedobj.id}}">
+            <input type="hidden" name="commentid" value="{{comment.id}}">
+              <input type="hidden" name="peopleid" value="{{current_user.id}}">
+              <input type="hidden" name="bool" value="1">
+              <button type="submit" class="notlikedbefore">
+                <img  src="{{ url_for('static', filename='images/iconfinder_thumbs-o-up_1608724.png')}}" />
+                 <span>{{comment.like}}</span>
+              </button>
+          </form>
+
+          <form class="likedislikeform" action="/salon/likedislike/{{ salon.id}}" method="post">
+                <input type="hidden" name="likedislikeid" value="{{comment.likedDislikedobj.id}}">
+              <input type="hidden" name="commentid" value="{{comment.id}}">
+              <input type="hidden" name="peopleid" value="{{current_user.id}}">
+              <input type="hidden" name="bool" value="-1">
+              <button class="notdislikedbefore">
+               <img  src="{{ url_for('static', filename='images/dislike1.png')}}" />
+           </button>
+            <span> {{comment.dislike}} </span>
+          </form>
+
+          {% elif comment.likedDislikedobj.ifliked == 1  %}
+
+          <form class="likedislikeform" action="/salon/likedislike/{{ salon.id}}" method="post">
+              <input type="hidden" name="likedislikeid" value="{{comment.likedDislikedobj.id}}">
+            <input type="hidden" name="commentid" value="{{comment.id}}">
+              <input type="hidden" name="peopleid" value="{{current_user.id}}">
+              <input type="hidden" name="bool" value="-1">
+              <button class="likedbefore">
+                <img  src="{{ url_for('static', filename='images/iconfinder_thumbs-up_1608950.png')}}" />
+              </button>
+                {{comment.like}}
+          </form>
+
+          <form class="likedislikeform" action="/salon/likedislike/{{ salon.id}}" method="post">
+              <input type="hidden" name="likedislikeid" value="{{comment.likedDislikedobj.id}}">
+            <input type="hidden" name="commentid" value="{{comment.id}}">
+              <input type="hidden" name="peopleid" value="{{current_user.id}}">
+              <input type="hidden" name="bool" value="-2">
+              <button class="notdislikedbefore">
+                <img  src="{{ url_for('static', filename='images/dislike1.png')}}" />
+
+           </button>
+            {{comment.dislike}}
+          </form>
+
+
+
+          {% elif comment.likedDislikedobj.ifDisliked == 1 %}
+          <form class="likedislikeform" action="/salon/likedislike/{{ salon.id}}" method="post">
+              <input type="hidden" name="likedislikeid" value="{{comment.likedDislikedobj.id}}">
+            <input type="hidden" name="commentid" value="{{comment.id}}">
+              <input type="hidden" name="peopleid" value="{{current_user.id}}">
+              <input type="hidden" name="bool" value="2">
+               <button class="notlikedbefore">
+               <img  src="{{ url_for('static', filename='images/iconfinder_thumbs-o-up_1608724.png')}}" />
+               </button>
+             {{comment.like}}
+          </form>
+
+          <form class="likedislikeform" action="/salon/likedislike/{{ salon.id}}" method="post">
+              <input type="hidden" name="likedislikeid" value="{{comment.likedDislikedobj.id}}">
+            <input type="hidden" name="commentid" value="{{comment.id}}">
+              <input type="hidden" name="peopleid" value="{{current_user.id}}">
+              <input type="hidden" name="bool" value="1">
+              <button class="dislikedbefore">
+                <img  src="{{ url_for('static', filename='images/dislike2.png')}}" />
+
+               </button>
+            {{comment.dislike}}
+          </form>
+
+          {% endif %}
+
+      </div>
+
+  {% endfor %}
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+{%endblock%}

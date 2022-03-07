@@ -1,0 +1,314 @@
+{%extends "base.html"%}
+{%block title%} Statistics {%endblock%}
+{%block content%}
+
+{% if salon != None %}
+
+  <h2>{{ salon.shopname }}</h2>
+
+{% endif %}
+
+<div align="center">
+
+    <button style="width : 180px;height:60px;background-color : green" type="button" id="rezervationbutton1" class="btn btn-primary ">Today</button>
+    <button style="width : 180px;height:60px;" type="button" id="rezervationbutton2" class="btn btn-primary ">Tomorrow</button>
+
+
+
+
+
+</div>
+
+
+<hr>
+
+
+
+
+<div class="todayrezervation" >
+  <h3>Today Rezervation </h3>
+  <strong>{{today}}</strong>
+
+    <table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Hour</th>
+      <th scope="col">Status</th>
+      <th scope="col">Service</th>
+      <th scope="col">Method</th>
+      <th scope="col">Note</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for rez in todayrezervations %}
+
+      <tr>
+              <th scope="row">{{loop.index }}</th>
+               {% if rez.peopleId ==  current_user.id %}
+                    <td>
+                        <div  style="display : inline , width : 150px; max-width:200px; margin-bottom : 20px;" class="form-group">
+                        <select class="form-control" id="updatehour">
+                             <option value="{{rez.dateTimeRezervation}}" selected disabled hidden> Date at  {{rez.dateTimeRezervation}} </option>
+                              {% for o in options %}
+                                 {% if o > hour %}
+                                    <option value="{{o}}:00">{{o}}:00</option>
+                                    <option value="{{o}}:30">{{o}}:30</option>
+                                 {% endif %}
+                              {% endfor %}
+                          </select>
+                        </div>
+                    </td>
+
+                {% else %}
+                     <td> <strong>{{rez.dateTimeRezervation}}</strong></td>
+                 {% endif %}
+
+              {% if rez.status == "okey" %}
+                <td>Confirmed</td>
+              {% else %}
+                <td>Not Confirmed</td>
+              {% endif %}
+               {% if rez.priceType.service_name != None  and rez.priceType.service_name != "" %}
+                   <td>{{rez.priceType.service_name}} - {{rez.priceType.price}}TL - {{rez.priceType.duration}} min</td>
+                {% else %}
+                  <td>No Service Type</td>
+                {% endif %}
+              <td>{{rez.paymentMethod}}</td>
+              <td>{{rez.note}}</td>
+              <td>
+                   {% if rez.peopleId ==  current_user.id %}
+
+                        <form style="display:inline;" action="/rezervation/edit/{{id}}" method="post" id="editrezervation">
+                            <input type="hidden" name="rezid" value="{{rez.id}}">
+                            <input type="hidden" name="day" value="{{today}}">
+                            <input type="hidden" name="daterez" id="daterez" value="">
+                            <button onclick="hourCopied()" style="height : 40px; width:70px;" type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+
+                         <form action="/rezervation/delete/{{id}}" method="post">
+                            <input type="hidden" name="rezid" value="{{rez.id}}">
+                            <button style="height : 40px;width:70px;" type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
+
+                    {% else %}
+                        no action
+                    {% endif %}
+              </td>
+      </tr>
+
+    {% endfor %}
+
+
+
+
+
+  </tbody>
+</table>
+
+
+  <form action="/rezervation/{{id}}" method="post">
+     <input name="formvalue" value="1" type="hidden">
+  <div class="form-group">
+    <label for="exampleFormControlSelect3">Beginning Time</label>
+    <select class="form-control" name="todayhour" id="exampleFormControlSelect3">
+      {% for o in options %}
+         {% if o > hour %}
+            <option value="{{o}}:00">{{o}}:00</option>
+            <option value="{{o}}:30">{{o}}:30</option>
+         {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">Payment</label>
+    <select name="pricetype"class="form-control" id="exampleFormControlSelect2">
+        <option  selected value="-1"> -- None -- </option>
+        {% for p in prices %}
+             <option value="{{p.id}}">{{p.service_name}} -  Price : {{p.price}}TL - Duration : {{p.duration}} min  </option>
+        {% endfor %}
+    </select>
+  </div>
+
+     <h6>Payment Method</h6>
+     <div class="form-check">
+    <input type="radio" checked="checked" name="payment" value="creditcard" id="option11"> Credit Card <br>
+    <input type="radio" name="payment" id="option22" value="cash"> Cash <br>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Note</label>
+    <textarea class="form-control" name="todaynote" id="exampleFormControlTextarea11" rows="3"></textarea>
+  </div>
+      {%if current_user.is_active  %}
+        <button style="height:40px;" type="submit" class="btn btn-primary">Submit</button>
+
+      {% else %}
+        <a href="/signin" style="height:40px;" type="submit" class="btn btn-primary">Submit</a>
+      {% endif %}
+       </form>
+
+
+
+
+
+
+
+</div>
+
+
+
+<div class="tomorrowrezervation" style="display:none;">
+
+
+    <h3>Tomorrow Rezervation </h3>
+    <strong>{{tomorrow}}</strong>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Hour</th>
+          <th scope="col">Status</th>
+          <th scope="col">Service</th>
+            <th scope="col">Method</th>
+          <th scope="col">Note</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+       <tbody>
+
+      {% for rez in tomorrowrezervations %}
+
+        <tr>
+                <th scope="row">{{loop.index }}</th>
+                {% if rez.peopleId ==  current_user.id %}
+                    <td>
+                        <div  style="display : inline , width : 150px; max-width:200px; margin-bottom : 20px;" class="form-group">
+                        <select class="form-control" id="updatehourtmrw">
+                             <option value="{{rez.dateTimeRezervation}}" selected disabled hidden> Date at  {{rez.dateTimeRezervation}} </option>
+                              {% for o in options %}
+
+                                    <option value="{{o}}:00">{{o}}:00</option>
+                                    <option value="{{o}}:30">{{o}}:30</option>
+
+                              {% endfor %}
+                          </select>
+                        </div>
+                    </td>
+
+                {% else %}
+                     <td> <strong>{{rez.dateTimeRezervation}}</strong></td>
+                 {% endif %}
+
+                {% if rez.status == "okey" %}
+                  <td>Confirmed</td>
+                {% else %}
+                  <td>Not Confirmed</td>
+                {% endif %}
+
+                 {% if rez.priceType.service_name != None  and rez.priceType.service_name != "" %}
+                   <td>{{rez.priceType.service_name}} - {{rez.priceType.price}}TL - {{rez.priceType.duration}} min</td>
+                {% else %}
+                  <td>No Service Type</td>
+                {% endif %}
+
+                <td>{{rez.paymentMethod}}</td>
+                <td>{{rez.note}}</td>
+                <td>
+                    {% if rez.peopleId == current_user.id %}
+
+
+                        <form style="display:inline;" action="/rezervation/edit/{{id}}" method="post" id="editrezervationtmrw">
+                            <input type="hidden" name="rezid" value="{{rez.id}}">
+                            <input type="hidden" name="day" value="{{tomorrow}}">
+                            <input type="hidden" name="daterez" id="datereztmrw" value="">
+                            <button onclick="hourCopiedtmrw()" style="height : 40px; width:70px;" type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+
+                        <form action="/rezervation/delete/{{id}}" method="post">
+                            <input type="hidden" name="rezid" value="{{rez.id}}">
+                            <button style="height : 40px;" type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    {% else %}
+                        no action
+                    {% endif %}
+
+                </td>
+        </tr>
+
+      {% endfor %}
+
+
+
+
+
+  </tbody>
+    </table>
+
+
+
+ <form action="/rezervation/{{id}}" method="POST">
+     <input name="formvalue" value="2" type="hidden">
+  <div class="form-group">
+    <label for="exampleFormControlSelect3">Beginning Time</label>
+    <select class="form-control" name="tomorrowhour" id="exampleFormControlSelect3">
+      {% for o in options %}
+
+            <option value="{{o}}:00">{{o}}:00</option>
+            <option value="{{o}}:30">{{o}}:30</option>
+
+      {% endfor %}
+    </select>
+  </div>
+
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">Payment</label>
+    <select name="pricetype"class="form-control" id="exampleFormControlSelect22">
+        <option selected="selected" value="-1"> -- select an option -- </option>
+        {% for p in prices %}
+            <option value="{{p.id}}">{{p.service_name}} -  Price : {{p.price}}TL - Duration : {{p.duration}} min  </option>
+        {% endfor %}
+
+    </select>
+  </div>
+    <h6>Payment Method</h6>
+     <div class="form-check">
+    <input type="radio"  checked="checked"name="payment" value="creditcard" id="option1"> Credit Card <br>
+    <input type="radio" name="payment" id="option2" value="cash"> Cash <br>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Note</label>
+    <textarea class="form-control" name="tomorrownote" id="exampleFormControlTextarea11" rows="3"></textarea>
+  </div>
+      {%if current_user.is_active  %}
+        <button style="height:40px;" type="submit" class="btn btn-primary">Submit</button>
+
+      {% else %}
+        <a href="/signin" style="height:40px;"  class="btn btn-primary">Submit</a>
+      {% endif %}
+
+ </form>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%endblock%}

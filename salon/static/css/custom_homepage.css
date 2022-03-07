@@ -1,0 +1,225 @@
+.mainbarcover
+{
+    background-color:grey;
+    margin-top:100px;
+    padding-bottom:30px;
+    padding-top:10px
+}
+.allsalonssdiv
+{
+    background-color:yellow;
+    margin-top:50px;
+    padding-bottom:30px;
+    padding-top:10px
+}
+
+
+
+
+#allsalonsdiv{
+    margin-top:50px;
+}
+
+#myInputStore{
+  width: 15%;
+  padding: 6px 10px;
+  margin: 8px 20 0 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+#myInputCity
+{
+  width: 15%;
+  padding: 6px 10px;
+  margin: 8px 10 0 10px;
+  border: 1px solid brown;
+  border-radius: 4px;
+}
+
+#allManicurists_length{
+     display: none;
+}
+
+#allsalonssearchdiv{
+    margin-bottom : 40px
+}
+
+.discountbutton
+{
+    height : 50px;
+    width : 50px;
+    background-color : green;
+}
+
+td .card {
+  background-color : white;
+  float : left;
+  margin-left : 100px;
+  margin-top : 10px;
+  margin - bottom : 10px;
+  display : none;
+
+}
+
+#panelsidetext
+{
+    display: none;
+    display: inline;
+    float: left;
+}
+
+.card-deck .card{
+    background-color : red;
+    width : 80px;
+    height : 200px;
+
+}
+
+#salon_card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 250px;
+  height:500px;
+  margin-left:20px;
+  margin-right : 50px;
+  text-align: center;
+  font-family: arial;
+  background-color:white;
+  flex: 0 0 20%;
+  padding-right:20px;
+  padding-left:20px;
+}
+
+.saloncard_title {
+  color: grey;
+  font-size: 18px;
+}
+
+salon_tagbutton {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.salon_tag {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+salon_tagbutton:hover, .salon_tag:hover {
+  opacity: 0.7;
+}
+
+
+.my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+
+.salon_comment{
+    margin-top:0px;
+    flex: 1;
+}
+
+.thumbnail {
+    padding:0px;
+}
+.panel {
+	position:relative;
+}
+.panel>.panel-heading:after,.panel>.panel-heading:before{
+	position:absolute;
+	top:11px;left:-16px;
+	right:100%;
+	width:0;
+	height:0;
+	display:block;
+	content:" ";
+	border-color:transparent;
+	border-style:solid solid outset;
+	pointer-events:none;
+}
+.panel>.panel-heading:after{
+	border-width:7px;
+	border-right-color:#f7f7f7;
+	margin-top:1px;
+	margin-left:2px;
+}
+.panel>.panel-heading:before{
+	border-right-color:#ddd;
+	border-width:8px;
+}
+
+.btn-primary
+{
+    margin-top : 12px;
+    height:30px;
+    margin-left:10px;
+    display:inline
+}
+.btn-danger{
+    margin-top : 12px;
+    height:30px;
+    margin-left:10px;
+    display:inline
+}
+
+.panel-body{
+    width:530px;
+    max-width:530px;
+    overflow: hidden;
+    word-wrap: break-word
+}
+
+.commentdatespan{
+    font-size:12px;
+    margin-left:10px;
+}
+
+.commenttextcontent{
+    border: 0px solid red;
+    padding : 5px;
+}
+
+.commenttexttitle{
+    border: 0px solid red;
+    padding : 5px;
+    display:inline;
+}
+
+.likedislikeform {
+    display:inline;
+    margin-right : 20px;
+}
+.likedbefore , .dislikedbefore , .notlikedbefore, .notdislikedbefore{
+    padding: 0;
+    margin-top : 15px;
+    border: none;
+    background: none;
+}
+
+#salonview_wrapper{
+    display: flex;
+}
+
+.rezeditform
+{
+    display : inline;
+}
+
+.contactform
+{
+    width : 500px;
+    max-width : 500px;
+    margin:0 auto;
+}
+
+

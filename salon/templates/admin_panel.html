@@ -1,0 +1,201 @@
+{%extends "base.html"%}
+{%block title%} Admin Panel {%endblock%}
+{%block content%}
+<center><p> Hello <b>{{current_user.username}}</b>. You can delete and update any person from
+    <u><a href="#people_table">user</a>, <a href="#manicurist_table">manicurist</a>, <a href="#owner_table">owner</a></u>
+    table. </p></center> <br> <br>
+
+{% if message == "True"%}
+    <center><h2 class="title" style="color: green;"> Update successful </h2></center>
+{% elif message == "False" %}
+   <center> <h2 class="title" style="color: red;"> Update failed !! </h2></center>
+{% endif %}
+
+<center><h3>People Table</h3></center>
+<script>
+$(function(){
+
+     //change to two ? how?
+
+    $('.order_check').change(function(){
+      var data= $(this).val();
+      var x = document.getElementById("order_control");
+      x.value=data;
+    });
+
+    $('.check')
+        .val('two')
+        .trigger('change');
+});
+</script>
+
+<form action="" method="post" name="signup_base_first" class="box">
+    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" id="people_table">
+
+        <div class="field is-grouped">
+            <h6>Operations: &nbsp;&nbsp; </h6>
+
+              <div class="control">
+                <div class="select is-small">
+                   <select class="order_check">
+                    <option value="order_id"> by Id</option>
+                    <option value="order_username"> by Username</option>
+                    <option value="order_role"> by Role</option>
+                  </select>
+                </div>
+                <button id="order_control" class="button is-info is-small" name="edit" value="order_id">
+                 <i class="fa fa-filter" aria-hidden="true"></i>&nbsp; Order
+                </button>
+            </div>
+
+            <div class="control">
+              <button class="button is-danger is-small" name="edit" value="delete">
+                  <i class="fa fa-times" aria-hidden="true"></i>&nbsp; Delete selected
+              </button>
+            </div>
+        </div>
+
+        <tr>
+            <th></th>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Name Surname</th>
+            <th>Mail</th>
+            <th>Password</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Role</th>
+            <th>Edit</th>
+        </tr>
+
+       {% for person in people %}
+        <tr>
+          <td>
+            <label class="checkbox">
+              <input type="checkbox" name="people_keys" value="{{ person.id }}"/>
+            </label>
+          </td>
+           <td>
+              {{ person.id }}
+          </td>
+          <td>
+              {{ person.username }}
+          </td>
+          <td>
+              {{ person.name_surname }}
+          </td>
+           <td>
+              {{ person.mail }}
+          </td>
+          <td>
+              {{ person.password_hash[20:30] }} ***
+          </td>
+           <td>
+              {{ person.gender }}
+          </td>
+          <td>
+              {{ person.age }}
+          </td>
+          <td>
+              {{ person.role }}
+          </td>
+          <td>
+            <label class="checkbox">
+              <button class="button is-link is-small" name="edit" value = "{{person.id}}" >
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                  &nbsp;Edit
+              </button>
+            </label>
+          </td>
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+
+<center><h3>Manicurist Table</h3></center>
+
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" id="manicurist_table">
+
+        <tr>
+            <th>Id</th>
+            <th>People Id</th>
+            <th>Salon_id</th>
+            <th>Gender_choice</th>
+            <th>Experience_year</th>
+            <th>Start_time</th>
+            <th>Finish_time</th>
+            <th>Rates</th>
+        </tr>
+       {% for manicurist in manicurists %}
+        <tr>
+           <td>
+              {{ manicurist.id }}
+          </td>
+          <td>
+              {{ manicurist.people_id }}
+          </td>
+            <td>
+              {{ manicurist.salonId }}
+          </td>
+          <td>
+              {{ manicurist.gender_choice }}
+          </td>
+           <td>
+              {{ manicurist.experience_year }}
+          </td>
+          <td>
+              {{ manicurist.start_time }}
+          </td>
+           <td>
+              {{ manicurist.finish_time }}
+          </td>
+          <td>
+              {{ manicurist.rates }}
+          </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+<center><h3>Owner Table</h3></center>
+
+<table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" id="owner_table">
+
+        <tr>
+            <th>Id</th>
+            <th>People Id</th>
+            <th>Tc Number</th>
+            <th>Serial Number</th>
+            <th>Vol Number</th>
+            <th>Family Order No</th>
+            <th>Order No</th>
+        </tr>
+       {% for owner in owners %}
+        <tr>
+           <td>
+              {{ owner.id }}
+          </td>
+          <td>
+              {{ owner.people_id }}
+          </td>
+            <td>
+              {{ owner.tc_number }}
+          </td>
+          <td>
+              {{ owner.serial_number }}
+          </td>
+           <td>
+              {{ owner.vol_number }}
+          </td>
+          <td>
+              {{ owner.family_order_no }}
+          </td>
+           <td>
+              {{ owner.order_no }}
+          </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+
+{%endblock%}

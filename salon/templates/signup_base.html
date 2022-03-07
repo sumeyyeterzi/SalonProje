@@ -1,0 +1,53 @@
+{%extends "base.html"%}
+{%block title%} Signup {%endblock%}
+{%block content%}
+<center>{%block type%}{%endblock%}</center>
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <form action="" method="post" name="signup_base_first" class="box">
+                <div class="field">
+                  <label for="mail" class="label">E-Mail Adress</label>
+                    <div class="control">
+                      <input type="email" name="mail" class="input is-success" required="required" value="your_mail_address@gmail.com"/>
+                    </div>
+                </div>
+                 <div class="field">
+                 <label for="name_surname" class="label">Name Surname</label>
+                    <div class="control">
+                      <input type="text" name="name_surname" class="input is-success" required="required" value="Lorem Ipsum"/>
+                    </div>
+                  </div>
+                  <div class="field">
+                  <label for="username" class="label">Username</label>
+                    <div class="control">
+                      <input type="text" name="username" class="input is-success" required="required" value="lorepsum"/>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="password" class="label">Password</label>
+                    <div class="control">
+                      <input type="password" name="password" class="input is-success" required="required" value="123"/>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="age" class="label">Age</label>
+                    <div class="control">
+                      <input type="number" name="age" class="input is-success" required="required" value="19"/>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <label for="gender" class="label">Gender</label>
+                    <input type="radio" name="gender" id="men" value="men" checked> Men </input>
+                    <input type="radio" name="gender" id="women" value="women"> Women </input>
+                  </div>
+             {%block question%}{%endblock%}
+            </form>
+                </div>
+                  </div>
+                    </div>
+                        </div>
+
+
+{%endblock%}

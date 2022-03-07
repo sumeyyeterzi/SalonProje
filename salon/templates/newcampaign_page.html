@@ -1,0 +1,62 @@
+{%extends "base.html"%}
+{%block title%} newcampaign {%endblock%}
+{%block content%}
+
+<h1 class="title">Add New Campaign</h1>
+
+<form action="" method="post" name="campaign_edit">
+
+    <div class="field">
+        <label for="title" class="label"></label>
+        <div class="control">
+            <select class="input" name="campaign_name" required="required">
+                <option name="campaign_name" value="Not defined">Select Campaign Name</option>
+                <option name="campaign_name" value="Hair">Hair</option>
+                <option name="campaign_name" value="Beard">Beard</option>
+                <option name="campaign_name" value="Washing">Washing</option>
+                <option name="campaign_name" value="Blow-dry">Blow-dry</option>
+                <option name="campaign_name" value="Hair coloring">Hair coloring</option>
+                <option name="campaign_name" value="Wax">Wax</option>
+            </select>
+        </div>
+    </div>
+
+    <div><label for="start_date">Start date:</label>
+
+        <input type="date" id="start" name="start_date"
+               value="2018-07-22"
+               min="2018-01-01" max="2020-12-31">
+    </div>
+
+    <div><label for="end_date">End date:</label>
+
+        <input type="date" id="end" name="end_date"
+               value="2018-07-22"
+               min="2018-01-01" max="2020-12-31">
+    </div>
+
+
+    <div>
+        <label for="title" class="label">Definition</label>
+        <div class="control">
+            <textarea style="height:250px; width:60%" type="text" name="definition" class="input"
+                      required="required"></textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <label for="title" class="label">Discount</label>
+        <div class="control">
+            <input style="width:60%" type="text" name="discount" class="input" required="required"/>
+        </div>
+    </div>
+
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+</form>
+
+{%endblock%}

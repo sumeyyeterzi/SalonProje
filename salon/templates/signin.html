@@ -1,0 +1,59 @@
+{%extends "base.html"%}
+{%block title%} Signin {%endblock%}
+{%block content%}
+
+<center>
+    <h1 class="title">Sign In </h1>
+     {% if message == "True"%}
+        <h2 class="title" style="color: green;"> You have successfully logged in as {{role}} </h2>
+    {% elif message == "False" %}
+        <h2 class="title" style="color: red;"> The system could not log you on. Make sure your username or password is correct !! </h2>
+    {% elif message == "admin_error" %}
+        <h5 class="title" style="color: red;"> You are not allowed admin page !! </h5>
+    {% endif %}
+</center>
+
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <form action="" method="post" name="signin" class="box">
+              <div class="field">
+                <label for="username" class="label">Username</label>
+                <div class="control has-icons-left">
+                  <input type="text" name="username" placeholder="e.g. username" class="input" required>
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-envelope"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="password" class="label">Password</label>
+                <div class="control has-icons-left">
+                  <input type="password"  name="password" placeholder="*******" class="input" required>
+                  <span class="icon is-small is-left">
+                    <i class="fa fa-lock"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="" class="checkbox">
+                  <input type="checkbox">
+                 Remember me
+                </label>
+              </div>
+
+              <div class="field is-grouped">
+                   <div class="control">
+                       <button class="button is-success">Login</button>
+                  </div>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{%endblock%}

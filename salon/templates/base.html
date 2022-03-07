@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Hairdressers - {% block title %}{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'js/jquery.js') }}" ></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+
+    <!-- Datatable js file for Homepage-->
+    <script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'js/datatablebootstrapjsfile.js') }}" ></script>
+    <script type = "text/javascript"
+         src = "{{ url_for('static', filename = 'js/datatablejsfile.js') }}" ></script>
+
+
+
+
+    <!--Css file for Datatable in HomePage-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cloudfarecsslib.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/datatablesbootstrap.css') }}">
+    <!----------------------------------------------->
+
+
+
+
+
+
+    <!--Bootstrap Css İnitializer -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Bootstrap Js İnitializer -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"/>
+
+
+    <!-- CustomHomePageCss  -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom_homepage.css') }}">
+
+    <style>
+    #flex-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0 auto;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 300px;
+      height: 300px;
+      perspective: 1000px;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+    }
+
+    .flip-card-front {
+      background-color: #bbb;
+      color: black;
+    }
+
+    .flip-card-back {
+      background-color: #2980b9;
+      color: white;
+      transform: rotateY(180deg);
+    }
+    </style>
+
+</head>
+<body>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img src="{{ url_for('static', filename = 'hairdresser-logo.png') }}" width="112" height="28">
+        </a>
+
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="{{ url_for('home_page') }}">
+            Home
+          </a>
+
+          <a class="navbar-item" href="{{ url_for('blog_page') }}">
+            Blog
+          </a>
+            <a class="navbar-item" href="{{ url_for('campaign_page') }}">
+            Campaigns
+          </a>
+
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+
+                {% if current_user.role == "admin" %}
+                <a class="navbar-item" href="{{ url_for('admin_panel') }}" >
+                <strong>Admin Panel</strong>
+                </a>
+                {% endif %}
+
+                {% if not current_user.is_active %}
+                <a class="navbar-item" href="{{ url_for('signupbase_page') }}" >
+                <strong>Sign up</strong>
+                </a>
+                <a class="navbar-item" href="{{ url_for('signin') }}" >
+                <strong>Sign in</strong>
+                </a>
+                {% else %}
+
+              <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link" href="{{ url_for('profile_page') }}">
+                        <strong>{{ current_user.username }}</strong>
+                </a>
+                <div class="navbar-dropdown">
+                   <a class="navbar-item" href="{{ url_for('profile_page') }}">
+                        <strong>Profile - {{ current_user.role }}</strong>
+                </a>
+                  <hr class="navbar-divider">
+                   <a class="navbar-item" href="{{ url_for('signout') }}" >
+                      <strong>Sign Out</strong>
+                   </a>
+                </div>
+              </div>
+            </div>
+                {% endif %}
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="section">
+        <div class="content">
+          {% block content %}{% endblock %}
+        </div>
+      </section>
+    </main>
+    <footer class="footer" style="display:block;clear:both">
+      <div class="content" id="about" >
+        <small>&copy;2020, Salon</small>
+      </div>
+    </footer>
+
+
+
+
+   <script>
+
+       const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+       // Check if there are any navbar burgers
+       if ($navbarBurgers.length > 0) {
+
+         // Add a click event on each of them
+         $navbarBurgers.forEach( el => {
+           el.addEventListener('click', () => {
+
+             // Get the target from the "data-target" attribute
+             const target = el.dataset.target;
+             const $target = document.getElementById(target);
+
+             // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+             el.classList.toggle('is-active');
+             $target.classList.toggle('is-active');
+
+           });
+         });
+       }
+
+
+       //DocumentReady
+       $(document).ready(function() {
+
+            //validation for comment
+            $('form[id="commentmanicurist"]').validate({
+              rules: {
+                bcommenttitle: {
+                required: true,
+                minlength : 3,
+                },
+                bcommenttext: {
+                required: true,
+                minlength : 5,
+                }
+
+              },
+              messages: {
+                bcommenttitle: {
+
+                minlength : "Title length needs to be longer than 3 char",
+                },
+                bcommenttext: {
+
+                minlength : "Text length needs to be longer than 5",
+                }
+              },
+              submitHandler: function(form) {
+                form.submit();
+              }
+            });
+
+            });
+
+
+
+
+
+
+
+            // Datatable adjustments Homepage
+            var table = $('#allManicurists').DataTable();
+            //search
+            $('#myInputStore').on( 'keyup', function () {
+                table.columns(0).search( this.value ).draw();
+            } );
+            //search
+            $('#myInputCity').on( 'keyup', function () {
+                table.columns(1).search( this.value ).draw();
+            } );
+
+            $('#allManicurists_length').hide();
+            $('#allManicurists_filter').hide();
+
+            //Slide down button in datatable of manicurists Homepage
+             $("#discountpricebutton").click(function(){
+                $("#panel").slideToggle("slow");
+             });
+
+             //statistics button toggle Statistic page
+              $("#statisticbutton1").click(function(){
+                $(".bestbershopstable").slideDown();
+                $(".lastaddedsalons").slideUp();
+                $(".bestmanicuristslist").slideUp();
+                $(".mostpopularmanicurists").slideUp();
+                $(".popularsalons").slideUp();
+              });
+              $("#statisticbutton2").click(function(){
+               $(".lastaddedsalon").slideDown();
+                 $(".bestbershopstable").slideUp();
+                $(".bestmanicuristslist").slideUp();
+                $(".mostpopularmanicurists").slideUp();
+                $(".popularsalons").slideUp();
+              });
+              $("#statisticbutton3").click(function(){
+                $(".bestmanicuristslist").slideDown();
+                 $(".bestbershopstable").slideUp();
+                $(".lastaddedsalon").slideUp();
+                $(".mostpopularmanicurists").slideUp();
+                $(".popularsalons").slideUp();
+              });
+
+              $("#statisticbutton4").click(function(){
+                $(".mostpopularmanicurists").slideDown();
+                $(".bestmanicuristslist").slideUp();
+                 $(".bestbershopstable").slideUp();
+                $(".lastaddedsalon").slideUp();
+                 $(".popularsalons").slideUp();
+              });
+
+              $("#statisticbutton5").click(function(){
+                $(".popularsalons").slideDown();
+                $(".mostpopularmanicurists").slideUp();
+                $(".bestmanicuristslist").slideUp();
+                 $(".bestbershopstable").slideUp();
+                $(".lastaddedsalon").slideUp();
+              });
+
+               //Button toggle - Rezervation Page
+               $("#rezervationbutton1").click(function(){
+                $(".todayrezervation").slideDown();
+                $("#rezervationbutton1").css("background-color","green");
+                $(".tomorrowrezervation").slideUp();
+                 $("#rezervationbutton2").css("background-color","blue");
+              });
+
+              $("#rezervationbutton2").click(function(){
+                $(".tomorrowrezervation").slideDown();
+                $("#rezervationbutton2").css("background-color","green");
+                $(".todayrezervation").slideUp();
+                 $("#rezervationbutton1").css("background-color","blue");
+              });
+
+               //Post Comment checkbox
+               $('input[type="checkbox"]').on('change', function() {
+                $(this).siblings('input[type="checkbox"]').not(this).prop('checked', false);
+                });
+
+
+
+              //Comment Datatable
+              // Material Design example
+            $(document).ready(function () {
+
+              $('#dtMaterialDesignExample').DataTable();
+              $('#dtMaterialDesignExample_wrapper').find('label').each(function () {
+                $(this).parent().append($(this).children());
+              });
+              $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('input').each(function () {
+                const $this = $(this);
+                $this.attr("placeholder", "Search");
+                $this.removeClass('form-control-sm');
+              });
+              $('#dtMaterialDesignExample_wrapper .dataTables_length').addClass('d-flex flex-row');
+              $('#dtMaterialDesignExample_wrapper .dataTables_filter').addClass('md-form');
+              $('#dtMaterialDesignExample_wrapper select').removeClass(
+              'custom-select custom-select-sm form-control form-control-sm');
+              $('#dtMaterialDesignExample_wrapper select').addClass('mdb-select');
+              $('#dtMaterialDesignExample_wrapper .mdb-select').materialSelect();
+              $('#dtMaterialDesignExample_wrapper .dataTables_filter').find('label').remove();
+
+
+
+
+
+
+
+        } );
+
+        //discount for manicuristlist
+        function discountpricebutton(buttonid) {
+            var xname= buttonid + "panel"
+            console.log (xname)
+            var x = document.getElementById(xname)
+            if (x.style.display == 'none') {
+                 console.log("1")
+                 x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+                console.log("2")
+            }
+
+        }
+
+        //edit post get data
+        document.getElementById("editpost1").addEventListener("click", inputCopied);
+        function inputCopied(){
+            var text = document.getElementById('commentedittext').innerHTML;
+            var title = document.getElementById('commentedittitle').innerHTML;
+            var e = document.getElementById("editrating");
+            var rate = e.options[e.selectedIndex].value;
+            document.getElementById('commenttextinput').value = text;
+            document.getElementById('commenttitleinput').value = title;
+             document.getElementById('editrateresult').value = rate;
+            document.getElementById("editcommentform").submit();
+
+        }
+
+        //rezervation edit today
+        function hourCopied(){
+            var e = document.getElementById("updatehour");
+            var rate = e.options[e.selectedIndex].value;
+            document.getElementById('daterez').value = rate;
+            document.getElementById("editrezervation").submit();
+        }
+        //rezervation edit tomorrow
+        function hourCopiedtmrw(){
+        var e = document.getElementById("updatehourtmrw");
+        var rate = e.options[e.selectedIndex].value;
+        document.getElementById('datereztmrw').value = rate;
+        document.getElementById("editrezervationtmrw").submit();
+
+        }
+
+
+
+
+
+
+   </script>
+
+
+
+
+</body>
+</html>

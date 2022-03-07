@@ -1,0 +1,177 @@
+{%extends "base.html"%}
+{%block title%} Profile page {%endblock%}
+{%block content%}
+
+<h1 class="title">{{title}}</h1>
+
+    <form action="{{ url_for('profile_page') }}" method="post" name="credit_card">
+        <div class="field">
+          <label class="label">Card Owner Name Surname</label>
+          <div class="control">
+            <input type="text" name="name_surname" class="input" required="required" maxlength="45"
+            {% if credit_card != None %}
+                   value="{{ credit_card.name }}"
+            {% endif %}
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Card Number</label>
+          <div class="control">
+            <input id="cardno" type="text" name="number" class="input" required="required" maxlength="19"
+            {% if credit_card != None %}
+                   value="{{ credit_card.card_number }}"
+            {% endif %}
+            />
+          </div>
+        </div>
+
+        <div class="field">
+        <label class="label">Valid Thru (01/20)</label>
+        <div class="control">
+          <input id="thru" type="text" name="date" class="input" required="required" maxlength="5"
+          {% if credit_card != None %}
+                   value="{{ credit_card.last_month }}/{{ credit_card.last_year }}"
+          {% endif %}
+          />
+        </div>
+        </div>
+
+        <div class="field">
+          <label class="label">CVV</label>
+          <div class="control">
+            <input id="cvv" type="number" name="cvv" class="input" required="required"
+            {% if credit_card != None %}
+                   value="{{ credit_card.cvv }}"
+            {% endif %}
+            />
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <input type="hidden" name="card_owner_id" class="input" value="{{current_user.id}}"/>
+          </div>
+        </div>
+
+        {% if credit_card != None %}
+        <div class="field">
+          <div class="control">
+            <input type="hidden" name="card_id" class="input" value="{{credit_card.id}}"/>
+          </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-primary is-small">Update</button>
+            </div>
+        </div>
+        {% else %}
+            <div class="field is-grouped">
+              <div class="control">
+                <button id="submit_button" class="button is-primary is-small">Save</button>
+              </div>
+            </div>
+        {% endif %}
+    </form>
+    {% if credit_card != None %}
+    <form action="{{ url_for('profile_page') }}" method="post" name="credit_card_delete">
+
+        <div class="field">
+          <div class="control">
+            <input type="hidden" name="delete_card" class="input" value="{{credit_card.id}}"/>
+          </div>
+        </div>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-danger is-small">Delete</button>
+            </div>
+        </div>
+
+    </form>
+    {% endif %}
+
+
+<script>
+    var cardno = document.getElementById("cardno");
+    var thru = document.getElementById("thru");
+    var cvv = document.getElementById("cvv");
+
+    var res = "";
+        var temp = 0;
+        for (var i = 0; i < cardno.value.length; i++) {
+            if (cardno.value[i] <= "9" && cardno.value[i] >= "0"){
+            res = res + cardno.value[i];
+            temp = temp + 1;
+        }
+        if (temp == 4){
+            res = res + " ";
+            temp = 0;
+        }
+    }
+    if (cardno.value.length < 19) {
+        cardno.value = res;
+    }
+
+    cardno.addEventListener('input', function (evt) {
+        var res = "";
+        var temp = 0;
+        for (var i = 0; i < cardno.value.length; i++) {
+            if (cardno.value[i] <= "9" && cardno.value[i] >= "0"){
+            res = res + cardno.value[i];
+            temp = temp + 1;
+        }
+        if (temp == 4){
+            res = res + " ";
+            temp = 0;
+        }
+    }
+    if (cardno.value.length < 19) {
+        cardno.value = res;
+    }
+
+    });
+
+    thru.addEventListener('input', function (evt) {
+        var res = "";
+        var temp = 0;
+        for (var i = 0; i < thru.value.length; i++) {
+            if (thru.value[i] <= "9" && thru.value[i] >= "0"){
+            res = res + thru.value[i];
+            temp = temp + 1;
+        }
+        if (temp == 2){
+            res = res + "/";
+            temp = 0;
+        }
+    }
+    if (thru.value.length < 5) {
+        thru.value = res;
+    }
+
+    });
+
+    cvv.addEventListener('input', function (evt) {
+        var res = "";
+        var temp = 0;
+        for (var i = 0; i < cvv.value.length; i++) {
+            if (cvv.value[i] <= "9" && cvv.value[i] >= "0"){
+            res = res + cvv.value[i];
+            temp = temp + 1;
+        }
+
+    }
+    if (res.length < 4) {
+        cvv.value = res;
+    }else{
+        cvv.value = res[0] + res[1] + res[2] + res[3]
+    }
+
+    });
+
+
+</script>
+
+
+{%endblock%}

@@ -1,0 +1,40 @@
+{%extends "signup_base.html"%}
+{%block type%}
+    <h1 class="title">Signup Page for Manicurists</h1>
+    {% if message == "True"%}
+        <h2 class="title" style="color: green;">Your registration is completed. </h2>
+    {% elif message == "False" %}
+        <h2 class="title" style="color: red;"> Mail or username is registered !! </h2>
+    {% endif %}
+{%endblock%}
+{%block question%}
+     <div class="field">
+            <label for="experience" class="label">Experience Year</label>
+            <div class="control">
+              <input type="number" name="experience" class="input is-success" required="required" value="3"/>
+            </div>
+     </div>
+     <div class="control">
+            <label for="gender_choice" class="label">Gender Choice</label>
+            <input type="radio" name="gender_choice" id="men" value="men" checked> Men </input>
+            <input type="radio" name="gender_choice" id="women" value="women"> Women </input>
+            <input type="radio" name="gender_choice" id="unisex" value="unisex"> Unisex </input>
+     </div>
+     <div class="field">
+            <label for="start_time" class="label">Start Time</label>
+            <div class="control">
+              <input type="time" name="start_time" class="input is-success" required="required" value="08:30"/>
+            </div>
+            <label for="finish_time" class="label">Finish Time</label>
+            <div class="control">
+              <input type="time" name="finish_time" class="input is-success" required="required" value="17:30"/>
+            </div>
+          </div>
+
+    <br/><br/>
+    <div class="field is-grouped">
+        <div class="control">
+             <button class="button is-success">Save</button>
+        </div>
+    </div>
+{%endblock%}

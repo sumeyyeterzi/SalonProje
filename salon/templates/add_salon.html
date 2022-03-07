@@ -1,0 +1,327 @@
+{%extends "base.html"%}
+{%block title%} {{title}} {%endblock%}
+{%block content%}
+
+<h1 class="title">{{title}}</h1>
+{% if shop == None %}
+<form action="{{ url_for('profile_page') }}" method="post" name="salon" enctype=multipart/form-data>
+
+    <div class="field">
+        <div class="control">
+            <input type="hidden" name="salon_owner_id" class="input" value="{{current_user.id}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Shop Name</label>
+        <div class="control">
+            <input type="text" name="shop_name" class="input" required="required"  maxlength="45"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Shop Logo</label>
+        <div class="control">
+            <input type="file" name="file" class="input" accept="image/*"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">City</label>
+        <div class="control">
+            <select class="input" name="city" required="required">
+                <option value="0">Select your city</option>
+                <option value="1">Adana</option>
+                <option value="2">Adıyaman</option>
+                <option value="3">Afyonkarahisar</option>
+                <option value="4">Ağrı</option>
+                <option value="5">Amasya</option>
+                <option value="6">Ankara</option>
+                <option value="7">Antalya</option>
+                <option value="8">Artvin</option>
+                <option value="9">Aydın</option>
+                <option value="10">Balıkesir</option>
+                <option value="11">Bilecik</option>
+                <option value="12">Bingöl</option>
+                <option value="13">Bitlis</option>
+                <option value="14">Bolu</option>
+                <option value="15">Burdur</option>
+                <option value="16">Bursa</option>
+                <option value="17">Çanakkale</option>
+                <option value="18">Çankırı</option>
+                <option value="19">Çorum</option>
+                <option value="20">Denizli</option>
+                <option value="21">Diyarbakır</option>
+                <option value="22">Edirne</option>
+                <option value="23">Elazığ</option>
+                <option value="24">Erzincan</option>
+                <option value="25">Erzurum</option>
+                <option value="26">Eskişehir</option>
+                <option value="27">Gaziantep</option>
+                <option value="28">Giresun</option>
+                <option value="29">Gümüşhane</option>
+                <option value="30">Hakkâri</option>
+                <option value="31">Hatay</option>
+                <option value="32">Isparta</option>
+                <option value="33">Mersin</option>
+                <option value="34">İstanbul</option>
+                <option value="35">İzmir</option>
+                <option value="36">Kars</option>
+                <option value="37">Kastamonu</option>
+                <option value="38">Kayseri</option>
+                <option value="39">Kırklareli</option>
+                <option value="40">Kırşehir</option>
+                <option value="41">Kocaeli</option>
+                <option value="42">Konya</option>
+                <option value="43">Kütahya</option>
+                <option value="44">Malatya</option>
+                <option value="45">Manisa</option>
+                <option value="46">Kahramanmaraş</option>
+                <option value="47">Mardin</option>
+                <option value="48">Muğla</option>
+                <option value="49">Muş</option>
+                <option value="50">Nevşehir</option>
+                <option value="51">Niğde</option>
+                <option value="52">Ordu</option>
+                <option value="53">Rize</option>
+                <option value="54">Sakarya</option>
+                <option value="55">Samsun</option>
+                <option value="56">Siirt</option>
+                <option value="57">Sinop</option>
+                <option value="58">Sivas</option>
+                <option value="59">Tekirdağ</option>
+                <option value="60">Tokat</option>
+                <option value="61">Trabzon</option>
+                <option value="62">Tunceli</option>
+                <option value="63">Şanlıurfa</option>
+                <option value="64">Uşak</option>
+                <option value="65">Van</option>
+                <option value="66">Yozgat</option>
+                <option value="67">Zonguldak</option>
+                <option value="68">Aksaray</option>
+                <option value="69">Bayburt</option>
+                <option value="70">Karaman</option>
+                <option value="71">Kırıkkale</option>
+                <option value="72">Batman</option>
+                <option value="73">Şırnak</option>
+                <option value="74">Bartın</option>
+                <option value="75">Ardahan</option>
+                <option value="76">Iğdır</option>
+                <option value="77">Yalova</option>
+                <option value="78">Karabük</option>
+                <option value="79">Kilis</option>
+                <option value="80">Osmaniye</option>
+                <option value="81">Düzce</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Detailed location</label>
+        <div class="control">
+            <textarea style="height:70px; width:100%" name="location" class="input" required="required" maxlength="295"></textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Opening Time</label>
+        <div class="control">
+            <input type="time" name="open_time" class="input" required="required"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Closing Time</label>
+        <div class="control">
+            <input type="time" name="close_time" class="input" required="required"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Trade Number</label>
+        <div class="control">
+            <input type="number" name="trade" class="input tradein" required="required"/>
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+
+</form>
+{% else %}
+<form action="{{ url_for('salon_details_page', id=shop.id) }}" method="post" name="salon">
+
+    <div class="field">
+        <div class="control">
+            <input type="hidden" name="salon_owner_id" class="input" value="{{current_user.id}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Shop Name</label>
+        <div class="control">
+            <input type="text" name="shop_name" class="input" required="required" value="{{shop.shopname}}" maxlength="45"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">City</label>
+        <div class="control">
+            <select class="input" name="city" required="required">
+                <option value="{{index}}">{{shop.city}}</option>
+                <option value="1">Adana</option>
+                <option value="2">Adıyaman</option>
+                <option value="3">Afyonkarahisar</option>
+                <option value="4">Ağrı</option>
+                <option value="5">Amasya</option>
+                <option value="6">Ankara</option>
+                <option value="7">Antalya</option>
+                <option value="8">Artvin</option>
+                <option value="9">Aydın</option>
+                <option value="10">Balıkesir</option>
+                <option value="11">Bilecik</option>
+                <option value="12">Bingöl</option>
+                <option value="13">Bitlis</option>
+                <option value="14">Bolu</option>
+                <option value="15">Burdur</option>
+                <option value="16">Bursa</option>
+                <option value="17">Çanakkale</option>
+                <option value="18">Çankırı</option>
+                <option value="19">Çorum</option>
+                <option value="20">Denizli</option>
+                <option value="21">Diyarbakır</option>
+                <option value="22">Edirne</option>
+                <option value="23">Elazığ</option>
+                <option value="24">Erzincan</option>
+                <option value="25">Erzurum</option>
+                <option value="26">Eskişehir</option>
+                <option value="27">Gaziantep</option>
+                <option value="28">Giresun</option>
+                <option value="29">Gümüşhane</option>
+                <option value="30">Hakkâri</option>
+                <option value="31">Hatay</option>
+                <option value="32">Isparta</option>
+                <option value="33">Mersin</option>
+                <option value="34">İstanbul</option>
+                <option value="35">İzmir</option>
+                <option value="36">Kars</option>
+                <option value="37">Kastamonu</option>
+                <option value="38">Kayseri</option>
+                <option value="39">Kırklareli</option>
+                <option value="40">Kırşehir</option>
+                <option value="41">Kocaeli</option>
+                <option value="42">Konya</option>
+                <option value="43">Kütahya</option>
+                <option value="44">Malatya</option>
+                <option value="45">Manisa</option>
+                <option value="46">Kahramanmaraş</option>
+                <option value="47">Mardin</option>
+                <option value="48">Muğla</option>
+                <option value="49">Muş</option>
+                <option value="50">Nevşehir</option>
+                <option value="51">Niğde</option>
+                <option value="52">Ordu</option>
+                <option value="53">Rize</option>
+                <option value="54">Sakarya</option>
+                <option value="55">Samsun</option>
+                <option value="56">Siirt</option>
+                <option value="57">Sinop</option>
+                <option value="58">Sivas</option>
+                <option value="59">Tekirdağ</option>
+                <option value="60">Tokat</option>
+                <option value="61">Trabzon</option>
+                <option value="62">Tunceli</option>
+                <option value="63">Şanlıurfa</option>
+                <option value="64">Uşak</option>
+                <option value="65">Van</option>
+                <option value="66">Yozgat</option>
+                <option value="67">Zonguldak</option>
+                <option value="68">Aksaray</option>
+                <option value="69">Bayburt</option>
+                <option value="70">Karaman</option>
+                <option value="71">Kırıkkale</option>
+                <option value="72">Batman</option>
+                <option value="73">Şırnak</option>
+                <option value="74">Bartın</option>
+                <option value="75">Ardahan</option>
+                <option value="76">Iğdır</option>
+                <option value="77">Yalova</option>
+                <option value="78">Karabük</option>
+                <option value="79">Kilis</option>
+                <option value="80">Osmaniye</option>
+                <option value="81">Düzce</option>
+            </select>
+
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Detailed location</label>
+        <div class="control">
+            <textarea style="height:70px; width:100%" name="location" class="input" required="required" maxlength="295">{{shop.location}}</textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Opening Time</label>
+        <div class="control">
+            <input type="time" name="open_time" class="input" required="required" value="{{shop.openingtime}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Closing Time</label>
+        <div class="control">
+            <input type="time" name="close_time" class="input" required="required" value="{{shop.closingtime}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Trade Number</label>
+        <div class="control">
+            <input type="number" name="trade" class="input tradein" required="required" value="{{shop.tradenumber}}"/>
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+
+</form>
+
+{% endif %}
+
+<script>
+
+var trades = document.getElementsByClassName("tradein");
+
+trade = trades[0];
+
+trade.addEventListener('input', function (evt) {
+        var res = "";
+        var temp = 0;
+        for (var i = 0; i < trade.value.length; i++) {
+            if (trade.value[i] <= "9" && trade.value[i] >= "0"){
+            res = res + trade.value[i];
+            temp = temp + 1;
+        }
+
+    }
+    if (res.length < 10) {
+        trade.value = res;
+    }else{
+        trade.value = res[0] + res[1] + res[2] + res[3] + res[4] + res[5] + res[6] + res[7] + res[8] + res[9]
+    }
+
+    });
+
+</script>
+
+
+{%endblock%}

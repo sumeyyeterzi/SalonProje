@@ -1,0 +1,52 @@
+{%extends "base.html"%}
+{%block title%} Blog {%endblock%}
+{%block content%}
+
+
+<div class="columns">
+    {% if current_user.is_authenticated == False %}
+    <div class="column is-3">
+        <a class="button is-primary is-block is-alt is-large"
+           href="{{ url_for('signin') }}">New Campaign</a>
+    </div>
+
+    {%else%}
+
+    <div class="column is-3">
+        <a class="button is-primary is-block is-alt is-large"
+           href="{{ url_for('newcampaign') }}">New Campaign</a>
+    </div>
+    {%endif%}
+
+    <div class="column is-9">
+        <div class="box content">
+            {% for campaign in campaigns %}
+            <article class="post">
+                <hr style="border-color: black">
+                <strong>{{ campaign.campaign_name }}</strong>
+                <p>{{ campaign.definition }}</p>
+                <div class="media">
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                Discount rate = % {{ campaign.discount }}
+
+                            </p>
+                            <p>
+                                Start Date: {{ campaign.start_date}}
+                            </p>
+                        </div>
+                        <div class="content">
+                            <p>
+                                End Date: {{ campaign.end_date}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {%endfor%}
+
+        </div>
+    </div>
+</div>
+{%endblock%}

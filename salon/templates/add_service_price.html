@@ -1,0 +1,120 @@
+{%extends "base.html"%}
+{%block title%} Profile page {%endblock%}
+{%block content%}
+
+<h1 class="title">{{title}}</h1>
+
+{%if price == None%}
+
+<form action="{{ url_for('add_service_price_page', salon_id=shop_id) }}" method="post" name="service_price">
+    <div class="field">
+        <label class="label">Service Name</label>
+        <div class="control">
+            <input type="text" name="name" class="input" required="required"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Definition</label>
+        <div class="control">
+            <textarea style="height:70px; width:100%" name="definition" class="input" required="required"></textarea>
+        </div>
+    </div>
+
+    <div class="control">
+        <label class="label">Gender</label>
+        <input type="radio" name="gender" value="men" checked> Men </input> <br>
+        <input type="radio" name="gender" value="women"> Women </input>
+    </div>
+
+    <div class="field">
+        <label class="label">Price</label>
+        <div class="control">
+            <input type="number" name="price" class="input" step="0.01" required="required"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Duration (minutes)</label>
+        <div class="control">
+            <input type="number" name="duration" class="input" required="required"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <input type="hidden" name="shop_id" class="input" value=""/>
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+
+</form>
+
+
+{%else%}
+
+<form action="{{ url_for('add_service_price_page', salon_id=shop_id) }}" method="post" name="service_price">
+    <div class="field">
+        <label class="label">Service Name</label>
+        <div class="control">
+            <input type="text" name="name" class="input" required="required" value="{{price.service_name}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Definition</label>
+        <div class="control">
+            <textarea style="height:70px; width:100%" name="definition" class="input" required="required">{{price.definition}}</textarea>
+        </div>
+    </div>
+
+    <div class="control">
+        <label class="label">Gender</label>
+        {%if price.gender == 'men'%}
+        <input type="radio" name="gender" value="men" checked > Men </input> <br>
+        <input type="radio" name="gender" value="women"> Women </input>
+        {%else%}
+        <input type="radio" name="gender" value="men"  > Men </input> <br>
+        <input type="radio" name="gender" value="women"checked> Women </input>
+        {%endif%}
+
+    </div>
+
+    <div class="field">
+        <label class="label">Price</label>
+        <div class="control">
+            <input type="number" name="price" class="input" step="0.01" required="required" value="{{price.price}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="label">Duration (minutes)</label>
+        <div class="control">
+            <input type="number" name="duration" class="input" required="required" value="{{price.duration}}"/>
+        </div>
+    </div>
+
+    <div class="field">
+        <div class="control">
+            <input type="hidden" name="price_id" class="input" value="{{price.id}}"/>
+        </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+            <button class="button is-primary is-small">Save</button>
+        </div>
+    </div>
+
+</form>
+
+{%endif%}
+
+
+
+{%endblock%}

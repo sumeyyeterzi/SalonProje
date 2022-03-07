@@ -1,0 +1,50 @@
+{%extends "signup_base.html"%}
+{%block type%}
+    <h1 class="title">Signup Page for Owners</h1>
+    {% if message == "True"%}
+        <h2 class="title" style="color: green;">Your registration is completed. </h2>
+    {% elif message == "False" %}
+        <h2 class="title" style="color: red;"> Mail or username is registered  !! </h2>
+    {% else %}
+        <h2 class="title" style="color: red;"> {{message}} </h2>
+    {% endif %}
+{%endblock%}
+{%block question%}
+
+    <div class="field">
+            <label for="tc_number" class="label">TC Number</label>
+            <div class="control">
+              <input type="number" name="tc_number" class="input is-success" required="required" value="" minlength="11" maxlength="11" size="11"/>
+            </div>
+    </div>
+    <div class="field">
+            <label for="serial_number" class="label">Serial Number</label>
+            <div class="control">
+              <input type="number" name="serial_number" class="input is-success" required="required" value=""/>
+            </div>
+    </div>
+    <div class="field">
+            <label for="vol_number" class="label">Vol Number</label>
+            <div class="control">
+              <input type="number" name="vol_number" class="input is-success" required="required" value=""/>
+            </div>
+    </div>
+    <div class="field">
+            <label for="family_order_no" class="label">Family Order No</label>
+            <div class="control">
+              <input type="number" name="family_order_no" class="input is-success" required="required" value=""/>
+            </div>
+    </div>
+    <div class="field">
+            <label for="order_no" class="label">Order No</label>
+            <div class="control">
+              <input type="number" name="order_no" class="input is-success" required="required" value=""/>
+            </div>
+    </div>
+
+    <div class="field is-grouped">
+        <div class="control">
+             <button class="button is-success">Save</button>
+        </div>
+    </div>
+{%endblock%}

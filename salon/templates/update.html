@@ -1,0 +1,119 @@
+{%extends "base.html"%}
+{%block title%} Admin Update {%endblock%}
+{%block content%}
+
+<center><h1>Update for {{person.role}} </h1></center>
+<center><h2>Hello {{person.username}} </h2></center>
+<center><h6 style="color: red;"> {{message}} </h6></center>
+
+<div class="container">
+      <div class="columns is-centered">
+          <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+            <form action="" method="post" name="signup_base_first" class="box">
+                <div class="field">
+                  <label for="mail" class="label">E-Mail Adress</label>
+                    <div class="control">
+                      <input type="email" name="mail" class="input is-success" required="required" value="{{person.mail}}"/>
+                    </div>
+                </div>
+                 <div class="field">
+                 <label for="name_surname" class="label">Name Surname</label>
+                    <div class="control">
+                        <textarea class="textarea is-success" name="name_surname" placeholder="Success textarea"  required="required">{{person.name_surname}}</textarea>
+                    </div>
+                  </div>
+                  <div class="field">
+                  <label for="username" class="label">Username</label>
+                    <div class="control">
+                      <input type="text" name="username" class="input is-success" required="required" value="{{person.username}}"/>
+                    </div>
+                  </div>
+                  <div class="field" id="password_area">
+                    <label for="password" class="label">New Password</label>
+                    <div class="control">
+                      <input type="password" name="password" class="input is-success" required="required" value=""/>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label for="age" class="label">Age</label>
+                    <div class="control">
+                      <input type="number" name="age" class="input is-success" required="required" value="{{person.age}}"/>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <label for="gender" class="label">Gender</label>
+                    <input type="radio" name="gender" id="men" value="men" checked> Men </input>
+                    <input type="radio" name="gender" id="women" value="women"> Women </input>
+                  </div>
+                {% if person.role in "manicurist"  %}
+                         <div class="field">
+            <label for="experience" class="label">Experience Year</label>
+            <div class="control">
+              <input type="number" name="experience" class="input is-success" required="required" value="{{person.experience_year}}"/>
+            </div>
+             </div>
+             <div class="control">
+                    <label for="gender_choice" class="label">Gender Choice</label>
+                    <input type="radio" name="gender_choice" id="men" value="men" checked> Men </input>
+                    <input type="radio" name="gender_choice" id="women" value="women"> Women </input>
+                    <input type="radio" name="gender_choice" id="unisex" value="unisex"> Unisex </input>
+             </div>
+             <div class="field">
+                <label for="start_time" class="label">Start Time</label>
+                <div class="control">
+                  <input type="time" name="start_time" class="input is-success" required="required" value="08:30"/>
+                </div>
+                <label for="finish_time" class="label">Finish Time</label>
+                <div class="control">
+                  <input type="time" name="finish_time" class="input is-success" required="required" value="17:30"/>
+                </div>
+              </div>
+
+                {% endif %}
+                 {% if person.role in "owner"  %}
+                <div class="field">
+                        <label for="tc_number" class="label">TC Number</label>
+                        <div class="control">
+                          <input type="number" name="tc_number" class="input is-success" required="required" value="" minlength="11" maxlength="11" size="11"/>
+                        </div>
+                </div>
+                <div class="field">
+                        <label for="serial_number" class="label">Serial Number</label>
+                        <div class="control">
+                          <input type="number" name="serial_number" class="input is-success" required="required" value=""/>
+                        </div>
+                </div>
+                <div class="field">
+                        <label for="vol_number" class="label">Vol Number</label>
+                        <div class="control">
+                          <input type="number" name="vol_number" class="input is-success" required="required" value=""/>
+                        </div>
+                </div>
+                <div class="field">
+                        <label for="family_order_no" class="label">Family Order No</label>
+                        <div class="control">
+                          <input type="number" name="family_order_no" class="input is-success" required="required" value=""/>
+                        </div>
+                </div>
+                <div class="field">
+                        <label for="order_no" class="label">Order No</label>
+                        <div class="control">
+                          <input type="number" name="order_no" class="input is-success" required="required" value=""/>
+                        </div>
+                </div>
+
+                {% endif %}
+
+                  <div class="field is-grouped">
+                    <div class="control">
+                        <br>
+                        <button class="button is-success" name="edit" value = "{{person.id}}_update" >Update</button>
+                    </div>
+                   </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
